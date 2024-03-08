@@ -1,4 +1,7 @@
-ekphrasis==0.5.1
-pandas==0.25.2
-pytest==5.4.1
-scikit-learn==0.21.3
+gensim==4.3.2
+numpy==1.24.4
+scipy==1.10.1
+torch==2.2.1
+torchvision==0.17.1
+nltk==3.8.1
+pandas==2.0.3
