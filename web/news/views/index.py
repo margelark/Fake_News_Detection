@@ -10,8 +10,7 @@ import news
 from tensorflow import keras
 import tensorflow as tf
 import numpy as np
-import h5py
-
+import keras.preprocessing.text as token
 
 @news.app.route("/")
 def show_index():
@@ -21,21 +20,44 @@ def show_index():
 
 @news.app.route("/evaluation", methods=["POST"])
 def show_evaluation():
+    #Set max_len (got from shrink_model)
+    max_len = 3073
 
-    #json_file = open('news/views/shrink_model.json', 'r')
-    #loaded_model_json = json_file.read()
-    #json_file.close()
-    #loaded_model = tf.keras.models.model_from_json(loaded_model_json)
-    #loaded_model.load_weights("news/views/shrink_model.weights.h5")
-    print(tf.__version__)
-    #model = tf.keras.models.load_model("news/views/shrink_model.keras")
-    #print(model.summary())
-    snippet = flask.request.form["snippet"]
-    # numeric_labels = {'pants-fire':0, 'false':1, 'barely-true':2, 'half-true':3, 'mostly-true':4, 'true':5}
-    #prediction = model.predict(snippet)
+    #Load the tokenizer from shrink_model
+    with open("news/views/tokenizer.json", "r") as json_file:
+        tokenizer_json = json_file.read()
+        tokenizer = token.tokenizer_from_json(tokenizer_json)
+
+
+    #Load in the exported model
+    model = tf.keras.models.load_model("news/views/shrink_model.h5")
     
+    #Run model on text Snippet
+    snippet = flask.request.form["snippet"]
+    snippet = clean_text([snippet])
+    test_sequences = tokenizer.texts_to_sequences(snippet)
+    test = keras.preprocessing.sequence.pad_sequences(test_sequences, maxlen=max_len, padding='post', truncating='post')
 
-    context = {"prediction": "prediction"}
+    pred = model.predict(test)
+    
+    
+    # The label
+    pred_index = np.argmax(pred)
+
+    # predict value
+    #pred_label = pred[0, pred_index]
+
+    # Sets the label
+    label = ""
+    if pred_index == 0:
+        label = "Potentially Fake"
+    elif pred_index == 1:
+        label = "Cannot tell"
+    elif pred_index == 2:
+        label = "Potentially true"
+
+    # Context json used for populating page
+    context = {"prediction": label}
 
     return flask.render_template("evaluation.html", **context)
 
@@ -54,3 +76,10 @@ def show_result():
         return flask.render_template("result.html")
     except Exception as e:
         return flask.redirect(flask.url_for("show_index"))
+    
+def clean_text(text):
+    if not isinstance(text, str):
+        return text
+    clean_text = text.lower()
+    clean_text = re.sub(r'[^\w\s]', '', clean_text)
+    return clean_text
