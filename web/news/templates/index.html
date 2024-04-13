@@ -7,6 +7,11 @@
 </head>
 
 <body>
+    <div class = "navbar">
+        <a href="/">Home</a>
+        <a href = "/about">About</a>
+    </div>
+
     <div class="title">
         <h1>Fake News Detection</h1>
     </div>
@@ -15,8 +20,8 @@
         <form action="/result" method="post" envtype="text/plain"> 
             <p>Input the link to the article:</p>
             <br>
-            <input type="text" name="link">
-            <input type="submit" value="Submit">
+            <input type="text" class ="textbox" name="link">
+            <input type="submit" class="submit" value="Submit">
         </form>
     </div>
 
@@ -24,10 +29,9 @@
         <form action="/evaluation" method="post" envtype="text/plain"> 
             <p>Input a text snippet from the article:</p>
             <br>
-            <input type="text" name="snippet">
-            <input type="submit" value="Submit">
+            <input type="text" class="textbox" name="snippet">
+            <input type="submit" class="submit" value="Submit">
         </form>
     </div>
-
 </body>
 </html>

@@ -77,6 +77,10 @@ def show_result():
     except Exception as e:
         return flask.redirect(flask.url_for("show_index"))
     
+@news.app.route("/about")
+def show_about():
+    return flask.render_template("about.html")
+    
 def clean_text(text):
     if not isinstance(text, str):
         return text
