@@ -50,9 +50,9 @@ def show_evaluation():
     # Sets the label
     label = ""
     if pred_index == 0:
-        label = "Potentially Fake"
+        label = "Potentially Misleading"
     elif pred_index == 1:
-        label = "Cannot tell"
+        label = "Unsure"
     elif pred_index == 2:
         label = "Potentially true"
 

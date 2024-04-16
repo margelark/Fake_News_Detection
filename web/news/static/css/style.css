@@ -61,6 +61,7 @@
 .leftcol,
 .rightcol,
 .midcol{
+    margin-top:8%;
     width: 33%;
     float:left;
     padding-top: 5%;
@@ -72,15 +73,17 @@
 .midcol::after {
     content: "";
     position: absolute;
-    top:0;
+    top:-20%;
+    right:0;
     transform: translateY(80%);
-    height: 75%;
+    height: 90%;
     width:4px;
     background-color:#333;
 }
 .midcol::before{
     left:0;
 }
-.micdol::after{
-    right: 100px;
+
+.desc {
+    margin-top:10%;
 }
