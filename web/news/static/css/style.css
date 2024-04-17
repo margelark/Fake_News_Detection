@@ -15,7 +15,7 @@
     padding-top:5%;
 }
 
-.textinput{
+.textinput {
     text-align:center;
     padding-top:8%;
 }
@@ -47,9 +47,14 @@
 }
 
 .textbox {
-    width: 300px;
+    width: 350px;
+    margin-bottom:7px;
 }
 
+.metadata{
+    width:150px;
+    margin-bottom:7px;
+}
 .submit{
     border-radius: 12px;
     width: 70px;
